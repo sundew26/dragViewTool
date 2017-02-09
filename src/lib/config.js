@@ -4,40 +4,40 @@ console.log('config-env', process.env.NODE_ENV)
 // 正式环境
 if (process.env.NODE_ENV === 'production') {
   // 默认跳转的网址
-  defaultRootUrl = 'http://www.kaistart.com/'
+  defaultRootUrl = 'http://...'
   // API请求替换的网址
-  API_ROOT = 'http://120.55.197.143:8080/crowdfundingservice2/'
+  API_ROOT = 'http://...'
 } else if (process.env.NODE_ENV === 'test') {
   // 测试环境
   // 默认跳转的网址
-  defaultRootUrl = 'http://test.kaistart.net/'
+  defaultRootUrl = 'http://...'
   // API请求替换的网址
-  API_ROOT = 'http://112.124.50.44:8080/crowdfundingservice2/'
+  API_ROOT = 'http://...'
 } else if (process.env.NODE_ENV === 'dev') {
   // 开发环境
   // 默认跳转的网址
-  defaultRootUrl = 'http://test.kaistart.net/'
+  defaultRootUrl = 'http://...'
   // API请求替换的网址
-  API_ROOT = 'http://121.40.220.174:8080/crowdfundingservice2/'
+  API_ROOT = 'http://...'
 } else {
 
 }
 export { defaultRootUrl, API_ROOT }
 // 请求签名是的秘药串
-export const cookieDomain = 'www.kaistart.com'
+export const cookieDomain = 'www....'
 // 默认视频封面
-export const defaultVideoPoster = 'http://images.kaistart.com/default-video-poster.png'
+export const defaultVideoPoster = 'http://images....'
 // 默认视频根地址
-export const defaultVideoRoot = 'http://video.kaistart.com/'
+export const defaultVideoRoot = 'http://...'
 // 默认图片根地址
-export const defaultImageRoot = 'http://images.kaistart.com/'
+export const defaultImageRoot = 'http://...'
 // 默认头像
-export const defaultAvatar = 'http://images.kaistart.com/header1.png'
+export const defaultAvatar = 'http://...'
 // 视频上传的最大限制
 export const videoMaxFileSize = '200mb'
 // 视频上传的文件格式限制
 export const videoFileMime = [
-  { title: '视频格式', extensions: 'mp4' }
+  {title: '视频格式', extensions: 'mp4'}
 ]
 // 图片上传的最大限制
 export const imageMaxFileSize = '2mb'
@@ -45,11 +45,11 @@ export const imageMaxFileSize = '2mb'
 export const fileSize = '20mb'
 // 图片上传文件格式限制
 export const imageFileMime = [
-  { title: '图片格式', extensions: 'jpg,png,gif,jpeg' }
+  {title: '图片格式', extensions: 'jpg,png,gif,jpeg'}
 ]
 // 图片上传文件格式限制
 export const fileMime = [
-  { title: '文件格式', extensions: 'doc,docx,xls,xlsx,pdf,png,jpg,jpeg' }
+  {title: '文件格式', extensions: 'doc,docx,xls,xlsx,pdf,png,jpg,jpeg'}
 ]
 // 编辑器默认配置
 export const defaultEditorSetting = {
@@ -81,7 +81,8 @@ export const defaultEditorSetting = {
       name: 'h3',
       contentDefault: '标题'
     }
-    ]},
+    ]
+  },
   anchor: {
     placeholderText: '请输入完整网址,包含http:// 或 https://'
   }

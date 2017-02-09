@@ -14,9 +14,9 @@ module.exports = {
     proxyTable: {
       '/api': {
         // 开发服务器
-        // target: 'http://192.168.31.90:8080/crowdfundingservice2',
+        // target: '',
         // 测试服务器
-        target: 'http://192.168.31.90:8080/',
+        target: 'http://192.168.20.135:8080/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

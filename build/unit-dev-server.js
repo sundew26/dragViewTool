@@ -80,7 +80,7 @@ prompt.get(schema, function (err, result) {
     app.use(proxyMiddleware(context, options))
   })
   // app.use(proxyMiddleware('/api/**', {
-  //         target: 'http://test.kaistart.net:8080',
+  //         target: 'http://...:8080',
   //         // changeOrigin: true, // for vhosted sites, changes host header to match to target's host
   //         logLevel: 'debug'
   //     }))
