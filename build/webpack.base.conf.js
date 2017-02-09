@@ -1,0 +1,90 @@
+var path = require('path')
+var entry = require('./getentry')
+var config = require('../config')
+var utils = require('./utils')
+var projectRoot = path.resolve(__dirname, '../')
+var entries_modal = require('./unit-dev-server')
+var entries_string = 'src/js/*.js';
+console.log('当前模式为：模式' + entries_modal);
+if (entries_modal === '2' || entries_modal === 2) {
+  entries_string = config.dev.entries
+}
+console.log(entries_string);
+var entries = entry.getEntry(entries_string);
+console.log(entries);
+module.exports = {
+  entry: entries,
+  output: {
+    path: config.build.assetsRoot,
+    publicPath: config.build.assetsPublicPath,
+    filename: 'static/js/[name].js',
+    // chunkFilename: 'js/[id].chunk.js?[chunkhash]'
+  },
+  resolve: {
+    extensions: ['', '.js', '.vue'],
+    fallback: [path.join(__dirname, '../node_modules')],
+    alias: {
+      'src': path.resolve(__dirname, '../src'),
+      // 'assets': path.resolve(__dirname, '../src/assets'),
+      'components': path.resolve(__dirname, '../src/components')
+    }
+  },
+  resolveLoader: {
+    fallback: [path.join(__dirname, '../node_modules')]
+  },
+  module: {
+    preLoaders: [
+      {
+        test: /\.vue$/,
+        loader: 'eslint',
+        include: projectRoot,
+        exclude: /node_modules/
+      },
+      {
+        test: /\.js$/,
+        loader: 'eslint',
+        include: projectRoot,
+        exclude: /node_modules|\/dist/
+      }
+    ],
+    loaders: [
+      {
+        test: /\.vue$/,
+        loader: 'vue'
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel',
+        include: projectRoot,
+        exclude: /node_modules/
+      },
+      {
+        test: /vux.src.*?js$/,
+        loader: 'babel'
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
+        test: /\.html$/,
+        loader: 'vue-html'
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url',
+        query: {
+          limit: 10000,
+          name: utils.assetsPath('[name].[hash:7].[ext]')
+        }
+      }
+    ]
+  },
+  eslint: {
+    // sublime友好支持
+    formatter: require('eslint-friendly-formatter')
+  },
+  vue: {
+    loaders: utils.cssLoaders()
+  }
+}
