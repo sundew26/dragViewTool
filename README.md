@@ -2,7 +2,10 @@
 
 ###### 配置很全 #####
 
-本地查看：http://localhost:8080/view/dragView.html
+##### 演示地址：https://stardew516.github.io/dragViewTool/dist/view/dragView.html
+##### 本地查看：http://localhost:8080/view/dragView.html
+
+###### 备注：github静态资源路径不对，修改dist下html路径，添加/dragViewTool/dist/
 ************切换效果*************
 可以查看两种效果: canvas自画和html2canvas
 方法:修改 src/page/dragView.vue 中注释部分
