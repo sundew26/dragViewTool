@@ -15,11 +15,11 @@
           drag="handleDrag">
         <p class="name-outer flex">
           <label>{{item.inputname}}:</label>
-          <input type="text" class="name flex1" value="{{item.inputval}}" v-model="item.inputval"/>
+          <input type="text" @focus="focusInput" @blur="blurInput" class="name flex1" value="{{item.inputval}}" v-model="item.inputval"/>
         </p>
         <p class="description-outer flex">
           <label>{{item.textname}}:</label>
-          <textarea class="description flex1" v-model="item.textval">{{item.textval}}</textarea>
+          <textarea class="description flex1" @focus="focusInput" @blur="blurInput" v-model="item.textval">{{item.textval}}</textarea>
         </p>
         <a class="iconfont icon-up moveIcon movePrev" @click.stop="movePrev($index)"></a>
         <a class="iconfont icon-down moveIcon moveNext" @click.stop="moveNext($index)"></a>
@@ -47,7 +47,8 @@
         ],
         idx: -1,
         bg: -1,
-        canvasHeight: 0
+        canvasHeight: 0,
+        dragList: []  // 拖拽列表
       }
     },
     components: {
@@ -62,6 +63,7 @@
         let len = this.defaultData.length
         let newline = {'id': len, 'inputname': '名称', 'inputval': len + 1, 'textname': '内容', 'textval': '', 'isShow': 1}
         this.defaultData.push(newline)
+        this.dragList = document.getElementsByClassName('dragEl')
       },
       // 删除列
       deleteItem: function () {
@@ -69,6 +71,7 @@
           return false
         }
         this.defaultData[this.idx].isShow = 0
+        this.dragList = document.getElementsByClassName('dragEl')
       },
       handleDragStart: function (elem) {
         // console.log('handleDragStart', elem)
@@ -273,6 +276,20 @@
           }
           this.idx = idx + 1
         }
+      },
+      // 解决拖拽与复制之间的冲突
+      disableDrag (op) {
+        console.log(op)
+        const len = this.dragList.length
+        for (let i = 0; i < len; i++) {
+          this.dragList[i].setAttribute('draggable', op)
+        }
+      },
+      focusInput () {
+        this.disableDrag(false)
+      },
+      blurInput () {
+        this.disableDrag(true)
       }
     },
     vuex: {
@@ -282,6 +299,13 @@
       actions: {
         getInfo
       }
+    },
+    ready () {
+      this.wH = window.innerWidth
+      this.dragList = document.getElementsByClassName('dragEl')
+      console.log(this.wH)
+      this.ob = document.getElementById('canvas')
+      this.default2change()
     }
   }
 </script>

@@ -15,11 +15,11 @@
           drag="handleDrag">
         <p class="name-outer flex">
           <label>{{item.inputname}}:</label>
-          <input @keyup="nl2br(item.inputval, $index, 'inputval')" type="text" class="input name flex1" value="{{item.inputval}}" v-model="item.inputval" placeholder="请输入项目名称"/>
+          <input @keyup="nl2br(item.inputval, $index, 'inputval')" @focus="focusInput" @blur="blurInput" type="text" class="input name flex1" value="{{item.inputval}}" v-model="item.inputval" placeholder="请输入项目名称"/>
         </p>
         <p class="description-outer flex">
           <label>{{item.textname}}:</label>
-          <textarea @keyup="nl2br(item.textval, $index, 'textval')" class="textarea description flex1" v-model="item.textval" placeholder="请输入项目内容">{{item.textval}}</textarea>
+          <textarea @keyup="nl2br(item.textval, $index, 'textval')" @focus="focusInput" @blur="blurInput" class="textarea description flex1" v-model="item.textval" placeholder="请输入项目内容">{{item.textval}}</textarea>
         </p>
         <a v-if="hideBf" class="iconfont icon-up moveIcon movePrev" @click.stop="movePrev($index)"></a>
         <a v-if="hideBf" class="iconfont icon-down moveIcon moveNext" @click.stop="moveNext($index)"></a>
@@ -74,7 +74,8 @@
         ob: {},
         popshow: false,
         hideBf: true,
-        wH: '1000'
+        wH: '1000',
+        dragList: []  // 拖拽列表
       }
     },
     components: {
@@ -106,6 +107,7 @@
         let newline = {'id': len, 'inputname': '名称', 'inputval': '', 'textname': '内容', 'textval': '', 'isShow': 1}
         this.defaultData.push(newline)
         this.default2change()
+        this.dragList = document.getElementsByClassName('dragEl')
       },
       // 删除列
       deleteItem: function () {
@@ -114,6 +116,7 @@
         }
         this.defaultData[this.idx].isShow = 0
         this.default2change()
+        this.dragList = document.getElementsByClassName('dragEl')
       },
       handleDragStart: function (elem) {
         this.loggedEvent = 'handleDragStart'
@@ -243,10 +246,25 @@
           this.changeData[i].inputval = this.nl2br(this.changeData[i].inputval)
           this.changeData[i].textval = this.nl2br(this.changeData[i].textval)
         }
+      },
+      // 解决拖拽与复制之间的冲突
+      disableDrag (op) {
+        console.log(op)
+        const len = this.dragList.length
+        for (let i = 0; i < len; i++) {
+          this.dragList[i].setAttribute('draggable', op)
+        }
+      },
+      focusInput () {
+        this.disableDrag(false)
+      },
+      blurInput () {
+        this.disableDrag(true)
       }
     },
     ready () {
       this.wH = window.innerWidth
+      this.dragList = document.getElementsByClassName('dragEl')
       console.log(this.wH)
       this.ob = document.getElementById('canvas')
       this.default2change()
